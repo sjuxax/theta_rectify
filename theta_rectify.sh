@@ -114,6 +114,9 @@ EOF
 
   # copy original metadata to dest, removing the corrections that have just been made
   echo "Pasting original tags..."
-  exiftool -overwrite_original -TagsFromFile "$1" -PosePitchDegrees= -PoseRollDegrees= "$destfile" 
+  exiftool -overwrite_original -a -m -TagsFromFile "$1" -all:all \
+    -PosePitchDegrees=0 -PoseRollDegrees=0 \
+    -ProcessingSoftware="theta_rectify.sh: git version" \
+    "$destfile"
   shift
 done
