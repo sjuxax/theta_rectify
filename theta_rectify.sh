@@ -98,7 +98,7 @@ EOF
 
   # execute povray script and rename file
   destfile="${noextension}_rectified.jpg"
-  povray +W$width +H$height -D +fj $TMP_ROOT.pov "+O$destfile"
+  povray +wt2 +V +W$width +H$height -D +fj $TMP_ROOT.pov "+O$destfile"
 
   # remove temporary files / clean up
   rm $TMP_ROOT.jpg
