@@ -104,7 +104,7 @@ EOF
   -D +fN $TMP_ROOT.pov "+O$TMP_ROOT.povray-out.png"
 
   # perform JPEG conversion at quality 95.
-  convert -quality 95 $TMP_ROOT.povray-out.png $destfile
+  convert -quality 90 $TMP_ROOT.povray-out.png $destfile
 
   # remove temporary files / clean up
   echo "Cleaning up temporary files..."
