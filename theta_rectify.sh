@@ -54,7 +54,7 @@ do
 
   # flip the image horizontally
   echo "Preparing image for transforms..."
-  convert -flop "$1" $TMP_ROOT.png
+  convert -define png:compression-level=1 -flop "$1" $TMP_ROOT.png
 
   # create povray script with correct image parameters
   cat <<EOF > $TMP_ROOT.pov
