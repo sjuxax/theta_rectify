@@ -100,7 +100,7 @@ EOF
   # execute povray script and rename file
   destfile="${noextension}_rectified.jpg"
   echo "Invoking POV-Ray to apply transformations..."
-  povray +wt2 +V +W$width +H$height \
+  povray +wt1 +V +W$width +H$height \
   -D +fN $TMP_ROOT.pov "+O$TMP_ROOT.povray-out.png"
 
   # perform JPEG conversion at quality 95.
