@@ -53,6 +53,7 @@ do
   pitch=$(bc <<< "$pitch * -1")
 
   # flip the image horizontally
+  echo "Preparing image for transforms..."
   convert -flop "$1" $TMP_ROOT.png
 
   # create povray script with correct image parameters
@@ -98,6 +99,7 @@ EOF
 
   # execute povray script and rename file
   destfile="${noextension}_rectified.jpg"
+  echo "Invoking POV-Ray to apply transformations..."
   povray +wt2 +V +W$width +H$height \
   -D +fN $TMP_ROOT.pov "+O$TMP_ROOT.povray-out.png"
 
@@ -105,11 +107,13 @@ EOF
   convert -quality 95 $TMP_ROOT.povray-out.png $destfile
 
   # remove temporary files / clean up
+  echo "Cleaning up temporary files..."
   rm -v $TMP_ROOT.povray-out.png
   rm -v $TMP_ROOT.png
   rm -v $TMP_ROOT.pov
 
   # copy original metadata to dest, removing the corrections that have just been made
+  echo "Pasting original tags..."
   exiftool -overwrite_original -TagsFromFile "$1" -PosePitchDegrees= -PoseRollDegrees= "$destfile" 
   shift
 done
