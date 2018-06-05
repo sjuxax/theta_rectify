@@ -53,7 +53,7 @@ do
   pitch=$(bc <<< "$pitch * -1")
 
   # flip the image horizontally
-  convert -flop "$1" $TMP_ROOT.jpg
+  convert -flop "$1" $TMP_ROOT.png
 
   # create povray script with correct image parameters
   cat <<EOF > $TMP_ROOT.pov
@@ -82,7 +82,7 @@ sphere {
   texture {
     pigment {
       image_map {
-        jpeg "$TMP_ROOT.jpg"
+        png "$TMP_ROOT.png"
         interpolate 2 // smooth it
         once   // don't tile image, just one copy  
         map_type 1
@@ -98,11 +98,16 @@ EOF
 
   # execute povray script and rename file
   destfile="${noextension}_rectified.jpg"
-  povray +wt2 +V +W$width +H$height -D +fj $TMP_ROOT.pov "+O$destfile"
+  povray +wt2 +V +W$width +H$height \
+  -D +fN $TMP_ROOT.pov "+O$TMP_ROOT.povray-out.png"
+
+  # perform JPEG conversion at quality 95.
+  convert -quality 95 $TMP_ROOT.povray-out.png $destfile
 
   # remove temporary files / clean up
-  rm $TMP_ROOT.jpg
-  rm $TMP_ROOT.pov
+  rm -v $TMP_ROOT.povray-out.png
+  rm -v $TMP_ROOT.png
+  rm -v $TMP_ROOT.pov
 
   # copy original metadata to dest, removing the corrections that have just been made
   exiftool -overwrite_original -TagsFromFile "$1" -PosePitchDegrees= -PoseRollDegrees= "$destfile" 
