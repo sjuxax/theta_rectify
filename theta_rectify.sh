@@ -19,11 +19,19 @@ do
     exit 2
   fi
 
+  # create the theta_rectifier tmp dir
+  TMP_DIR="/tmp/theta_rectifier"
+  if [ ! -d /tmp/theta_rectifier ]; then
+    echo "Making temporary directory for rectifier working files at: $TMP_DIR"
+    mkdir -v $TMP_DIR
+  fi
+
   # get the filename without the extension
+  PATHLESS_FILENAME=`basename $1`
   noextension=`echo "$1" | sed 's/\(.*\)\..*/\1/'`
 
   # generate a temp name so that parallel runs don't clobber each other
-  TMP_ROOT="${noextension}_${RANDOM}_theta_rectify.tmp"
+  TMP_ROOT="$TMP_DIR/${PATHLESS_FILENAME}_${RANDOM}_theta_rectify.tmp"
 
   # calculate destination name and check for existence before proceeding
   destfile="${noextension}_rectified.jpg"
