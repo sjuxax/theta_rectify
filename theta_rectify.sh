@@ -57,8 +57,11 @@ do
 
   # create povray script with correct image parameters
   cat <<EOF > $TMP_ROOT.pov
+#version 3.7;
 // Equirectangular Panorama Render
 // bare bones script
+
+global_settings { assumed_gamma 1.0 }
 
 // camera settings
 camera {
