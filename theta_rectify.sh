@@ -105,6 +105,6 @@ EOF
   rm $TMP_ROOT.pov
 
   # copy original metadata to dest, removing the corrections that have just been made
-  exiftool -a -overwrite_original -TagsFromFile "$1" -PosePitchDegrees= -PoseRollDegrees= -F -Software="POV-Ray via theta_rectify.sh" "$destfile"
+  exiftool -overwrite_original -TagsFromFile "$1" -PosePitchDegrees= -PoseRollDegrees= "$destfile" 
   shift
 done
